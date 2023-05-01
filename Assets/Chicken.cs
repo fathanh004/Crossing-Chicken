@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Events;
 
 public class Chicken : MonoBehaviour
 {
     [SerializeField] float moveDuration;
     [SerializeField] float jumpPower;
 
-    // Update is called once per frame
+    public UnityEvent<Vector3> OnJumpEnd;
+
+    // Update is called once per frame  
     void Update()
     {
         if (DOTween.IsTweening(transform)) return;
@@ -41,9 +44,15 @@ public class Chicken : MonoBehaviour
     }
     public void Move(Vector3 direction)
     {
+        
         // isMoving = true;
         //transform.DOJump(transform.position + direction, 0.5f, 1, 0.2f).OnComplete(() => isMoving = false);
-        transform.DOJump(transform.position + direction, jumpPower, 1, moveDuration);
+        transform.DOJump(transform.position + direction, jumpPower, 1, moveDuration).onComplete = BroadCastPositionOnJumpEnd;
         transform.forward = direction;
+    }
+
+    private void BroadCastPositionOnJumpEnd()
+    {
+        OnJumpEnd.Invoke(transform.position);
     }
 }
