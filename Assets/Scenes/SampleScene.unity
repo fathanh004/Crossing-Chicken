@@ -154,7 +154,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilePrefab: {fileID: 8464679629348085572, guid: 88be3c8067b518846996f6ef79044c47, type: 3}
   treePrefab: {fileID: 4272106195799846046, guid: 6f80ea75814f38747a5ef19190850d39, type: 3}
-  treeProbability: 0
+  treeProbability: 0.3
 --- !u!4 &133787708
 Transform:
   m_ObjectHideFlags: 0
@@ -202,9 +202,9 @@ MonoBehaviour:
   grassPrefab: {fileID: 133787707}
   roadPrefab: {fileID: 810499238}
   initialGrassCount: 5
-  horizontalSize: 9
+  horizontalSize: 15
   backRelativeDistance: -4
-  forwardViewDistance: 14
+  forwardViewDistance: 10
   treeProbability: 0.5
 --- !u!4 &478303217
 Transform:

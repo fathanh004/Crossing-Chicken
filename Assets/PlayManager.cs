@@ -12,8 +12,16 @@ public class PlayManager : MonoBehaviour
     [SerializeField] int forwardViewDistance = 15;
     [SerializeField, Range(0, 1)] float treeProbability;
 
+    private List<Terrain> terrainList;
+    Dictionary<int, Terrain> activeTerrainDict = new Dictionary<int, Terrain>(20);
+
     private void Start()
     {
+        terrainList = new List<Terrain>(){
+            grassPrefab,
+            roadPrefab
+        };
+
         //membuat initial grass
         for (int zPos = backRelativeDistance; zPos < initialGrassCount; zPos++)
         {
@@ -21,13 +29,51 @@ public class PlayManager : MonoBehaviour
             grass.transform.localPosition = new Vector3(0, 0, zPos);
             grass.SetTreePercentage(zPos < 0 ? 1 : 0);
             grass.Generate(horizontalSize);
+            activeTerrainDict[zPos] = grass;
         }
 
         for (int zPos = initialGrassCount; zPos < forwardViewDistance; zPos++)
         {
-            var terrain = Instantiate(roadPrefab);
+            var randomIndex = Random.Range(0, terrainList.Count);
+            var terrain = Instantiate(terrainList[randomIndex]);
             terrain.transform.localPosition = new Vector3(0, 0, zPos);
             terrain.Generate(horizontalSize);
+
+            activeTerrainDict[zPos] = terrain;
         }
+    }
+
+    private Terrain SpawnRandomTerrain(int zPos)
+    {
+        Terrain terrainCheck = null;
+        for (int z = -1; z >= -3; z--)
+        {
+            var checkPos = zPos + forwardViewDistance + z;
+            if (terrainCheck == null)
+            {
+                terrainCheck = activeTerrainDict[checkPos];
+                continue;
+            }
+            else if (terrainCheck.GetType() != activeTerrainDict[checkPos].GetType())
+            {
+                var randomIndex = Random.Range(0, terrainList.Count);
+                return Instantiate(terrainList[randomIndex]);
+            }
+            else
+            {
+                continue;
+            }
+        }
+
+        if (terrainCheck is Road)
+        {
+            return Instantiate(grassPrefab);
+        }
+        else
+        {
+            return Instantiate(roadPrefab);
+        }
+
+        return null;
     }
 }
