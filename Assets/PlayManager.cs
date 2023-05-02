@@ -17,7 +17,7 @@ public class PlayManager : MonoBehaviour
     Dictionary<int, Terrain> activeTerrainDict = new Dictionary<int, Terrain>(20);
     [SerializeField] private int travelDistance;
 
-    public UnityEvent<int,int> OnUpdateTerrainLimit;
+    public UnityEvent<int, int> OnUpdateTerrainLimit;
 
     private void Start()
     {
@@ -38,6 +38,8 @@ public class PlayManager : MonoBehaviour
         {
             SpawnRandomTerrain(zPos);
         }
+
+        OnUpdateTerrainLimit.Invoke(horizontalSize, travelDistance + backViewDistance);
     }
 
     private Terrain SpawnRandomTerrain(int zPos)

@@ -46,7 +46,9 @@ public class Grass : Terrain
 
     private void SpawnTree(int xPos)
     {
-        var go = Instantiate(treePrefab, transform);
-        go.transform.localPosition = new Vector3(xPos, 0, 0);
+        var go = Instantiate(treePrefab,
+        new Vector3(xPos, 0, this.transform.position.z),
+        Quaternion.identity, 
+        transform);
     }
 }

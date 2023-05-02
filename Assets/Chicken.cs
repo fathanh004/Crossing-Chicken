@@ -15,7 +15,7 @@ public class Chicken : MonoBehaviour
 
     public UnityEvent<Vector3> OnJumpEnd;
 
-    int timer;
+    float timer;
     // Update is called once per frame  
     void Update()
     {
@@ -26,11 +26,11 @@ public class Chicken : MonoBehaviour
             timer = 0;
         }
 
-        if (timer > 300)
+        if (timer >= 5)
         {
             animator.SetBool("Turn Head", true);
         }
-        
+
         if (DOTween.IsTweening(transform)) return;
 
         Vector3 direction = Vector3.zero;
@@ -58,16 +58,26 @@ public class Chicken : MonoBehaviour
             direction = Vector3.zero;
         }
 
-        timer += 1;
+        timer += Time.deltaTime;
     }
     public void Move(Vector3 direction)
     {
         var targetPosition = transform.position + direction;
-        if (targetPosition.x < leftMoveLimit || targetPosition.x > rightMoveLimit || targetPosition.z < backMoveLimit)
+
+        if (targetPosition.x < leftMoveLimit ||
+            targetPosition.x > rightMoveLimit ||
+            targetPosition.z < backMoveLimit ||
+            Tree.AllPositions.Contains(targetPosition))
         {
             targetPosition = transform.position;
         }
-        transform.DOJump(targetPosition, jumpPower, 1, moveDuration).onComplete = BroadCastPositionOnJumpEnd;
+
+        transform.
+        DOJump(targetPosition,
+            jumpPower,
+            1,
+            moveDuration).onComplete = BroadCastPositionOnJumpEnd;
+
         transform.forward = direction;
     }
 
