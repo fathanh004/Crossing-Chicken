@@ -8,12 +8,29 @@ public class Chicken : MonoBehaviour
 {
     [SerializeField] float moveDuration;
     [SerializeField] float jumpPower;
+    [SerializeField] int leftMoveLimit;
+    [SerializeField] int rightMoveLimit;
+    [SerializeField] int backMoveLimit;
+    [SerializeField] Animator animator;
 
     public UnityEvent<Vector3> OnJumpEnd;
 
+    int timer;
     // Update is called once per frame  
     void Update()
     {
+        //if no input in 5 seconds, do idle animation
+        if (Input.anyKeyDown)
+        {
+            animator.SetBool("Turn Head", false);
+            timer = 0;
+        }
+
+        if (timer > 300)
+        {
+            animator.SetBool("Turn Head", true);
+        }
+        
         if (DOTween.IsTweening(transform)) return;
 
         Vector3 direction = Vector3.zero;
@@ -41,14 +58,24 @@ public class Chicken : MonoBehaviour
             direction = Vector3.zero;
         }
 
+        timer += 1;
     }
     public void Move(Vector3 direction)
     {
-        
-        // isMoving = true;
-        //transform.DOJump(transform.position + direction, 0.5f, 1, 0.2f).OnComplete(() => isMoving = false);
-        transform.DOJump(transform.position + direction, jumpPower, 1, moveDuration).onComplete = BroadCastPositionOnJumpEnd;
+        var targetPosition = transform.position + direction;
+        if (targetPosition.x < leftMoveLimit || targetPosition.x > rightMoveLimit || targetPosition.z < backMoveLimit)
+        {
+            targetPosition = transform.position;
+        }
+        transform.DOJump(targetPosition, jumpPower, 1, moveDuration).onComplete = BroadCastPositionOnJumpEnd;
         transform.forward = direction;
+    }
+
+    public void UpdateMoveLimit(int horizontalSize, int backLimit)
+    {
+        leftMoveLimit = -horizontalSize / 2;
+        rightMoveLimit = horizontalSize / 2;
+        backMoveLimit = backLimit;
     }
 
     private void BroadCastPositionOnJumpEnd()
