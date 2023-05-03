@@ -1,41 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class Car : MonoBehaviour
 {
-    [SerializeField] float moveDuration;
-    [SerializeField] int moves;
+    [SerializeField, Range(0, 10)] float speed;
+    Vector3 initialPosition;
+    float distanceLimit = float.MaxValue;
 
-    // Update is called once per frame
-    void Update()
+    public void SetUpDistanceLimit(float distance)
     {
-        if (DOTween.IsTweening(transform)) return;
+        this.distanceLimit = distance;
+    }
 
-        Vector3 direction = Vector3.zero;
+    private void Start()
+    {
+        initialPosition = this.transform.position;
+    }
 
-        // after two moves, change direction to make the car move backwards
-        if (moves == 2)
+    private void Update()
+    {
+        transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        if (Vector3.Distance(initialPosition, this.transform.position) > this.distanceLimit)
         {
-            direction = Vector3.left * 2;
-            moves = -1;
-        }
-        else
-        {
-            direction += Vector3.right;
-        }
-        
-        if (direction != Vector3.zero)
-        {
-            Move(direction);
-            moves++;
+            Destroy(this.gameObject);
         }
     }
 
-    public void Move(Vector3 direction)
-    {
-        transform.DOMoveX(transform.position.x + direction.x, moveDuration).SetEase(Ease.Linear);
-        transform.forward = direction;
-    }
+
 }

@@ -12,6 +12,7 @@ public class Chicken : MonoBehaviour
     [SerializeField] int rightMoveLimit;
     [SerializeField] int backMoveLimit;
     [SerializeField] Animator animator;
+    private bool isDead = false;
 
     public UnityEvent<Vector3> OnJumpEnd;
 
@@ -19,6 +20,9 @@ public class Chicken : MonoBehaviour
     // Update is called once per frame  
     void Update()
     {
+        if (isDead){
+            return;
+        }
         //if no input in 5 seconds, do idle animation
         if (Input.anyKeyDown)
         {
@@ -91,5 +95,14 @@ public class Chicken : MonoBehaviour
     private void BroadCastPositionOnJumpEnd()
     {
         OnJumpEnd.Invoke(transform.position);
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if(isDead){
+            return;
+        }
+        transform.DOScaleY(0.1f, 0.2f);
+        isDead = true;
+        animator.enabled = false;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Grass : Terrain
 {
     [SerializeField] GameObject treePrefab;
+    [SerializeField] float treePosY;
     [SerializeField, Range(0, 1)] float treeProbability;
 
     public void SetTreePercentage(float newProbability)
@@ -47,7 +48,7 @@ public class Grass : Terrain
     private void SpawnTree(int xPos)
     {
         var go = Instantiate(treePrefab,
-        new Vector3(xPos, 0, this.transform.position.z),
+        new Vector3(xPos, treePosY, this.transform.position.z),
         Quaternion.identity, 
         transform);
     }
