@@ -16,6 +16,7 @@ public class Chicken : MonoBehaviour
 
     public UnityEvent<Vector3> OnJumpEnd;
     public UnityEvent<int> OnGetCoin;
+    public UnityEvent OnDie;
 
     float timer;
     // Update is called once per frame  
@@ -110,11 +111,27 @@ public class Chicken : MonoBehaviour
             transform.DOScaleY(0.1f, 0.2f);
             isDead = true;
             animator.enabled = false;
+            Invoke("Die", 3);
         }
         else if (other.TryGetComponent<Coin>(out var coin))
-        {   
+        {
             OnGetCoin.Invoke(coin.Value);
             coin.Collected();
         }
+        else if (other.TryGetComponent<Eagle>(out var eagle))
+        {
+            if (this.transform != eagle.transform)
+            {
+                this.transform.SetParent(eagle.transform);
+                Invoke("Die", 3);
+            }
+
+        }
+
+    }
+
+    private void Die()
+    {
+        OnDie.Invoke();
     }
 }

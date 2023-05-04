@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class PlayManager : MonoBehaviour
 {
     [SerializeField] Chicken chicken;
+    [SerializeField] List<Coin> coinList;
     [SerializeField] List<Terrain> terrainList;
     [SerializeField] int initialGrassCount = 5;
     [SerializeField] int horizontalSize;
@@ -80,7 +81,6 @@ public class PlayManager : MonoBehaviour
 
         randomIndex = Random.Range(0, candidateTerrain.Count);
         return SpawnTerrain(candidateTerrain[randomIndex], zPos);
-
     }
 
     public Terrain SpawnTerrain(Terrain terrain, int zPos)
@@ -89,8 +89,38 @@ public class PlayManager : MonoBehaviour
         terrain.transform.localPosition = new Vector3(0, 0, zPos);
         terrain.Generate(horizontalSize);
         activeTerrainDict[zPos] = terrain;
+        SpawnCoin(horizontalSize, zPos);
         return terrain;
+    }
 
+    public Coin SpawnCoin(int horizontalSize, int zPos, float probability = 0.2f)
+    {
+        if (probability == 0)
+        {
+            return null;
+        }
+
+        List<Vector3> spawnPosList = new List<Vector3>();
+        for (int x = -horizontalSize / 2; x <= horizontalSize / 2; x++)
+        {
+            var spawnPos = new Vector3(x, 0.1f, zPos);
+            if (Tree.AllPositions.Contains(spawnPos) == false){
+                spawnPos.y = 0.5f;
+                spawnPosList.Add(spawnPos);
+            }
+        }
+
+        if (probability >= Random.value)
+        {
+            var index = Random.Range(0, coinList.Count);
+            var spawnPosIndex = Random.Range(0, spawnPosList.Count);
+            return Instantiate(
+                coinList[index], 
+                spawnPosList[spawnPosIndex], 
+                Quaternion.identity);
+        }
+
+        return null;
     }
 
     public void UpdateTravelDistance(Vector3 targetPosition)
