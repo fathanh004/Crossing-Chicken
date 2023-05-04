@@ -15,12 +15,14 @@ public class Chicken : MonoBehaviour
     private bool isDead = false;
 
     public UnityEvent<Vector3> OnJumpEnd;
+    public UnityEvent<int> OnGetCoin;
 
     float timer;
     // Update is called once per frame  
     void Update()
     {
-        if (isDead){
+        if (isDead)
+        {
             return;
         }
         //if no input in 5 seconds, do idle animation
@@ -97,12 +99,22 @@ public class Chicken : MonoBehaviour
         OnJumpEnd.Invoke(transform.position);
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if(isDead){
-            return;
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<Car>(out var car))
+        {
+            if (isDead)
+            {
+                return;
+            }
+            transform.DOScaleY(0.1f, 0.2f);
+            isDead = true;
+            animator.enabled = false;
         }
-        transform.DOScaleY(0.1f, 0.2f);
-        isDead = true;
-        animator.enabled = false;
+        else if (other.TryGetComponent<Coin>(out var coin))
+        {   
+            OnGetCoin.Invoke(coin.Value);
+            coin.Collected();
+        }
     }
 }
