@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class Chicken : MonoBehaviour
 {
+    [SerializeField] AudioSource audioSource;
     [SerializeField] float moveDuration;
     [SerializeField] float jumpPower;
     [SerializeField] int leftMoveLimit;
@@ -109,8 +110,14 @@ public class Chicken : MonoBehaviour
                 return;
             }
             transform.DOScaleY(0.1f, 0.2f);
+            if (isUnmoveable == false)
+            { 
+                audioSource.Play();
+            }
             isUnmoveable = true;
             animator.enabled = false;
+
+
             Invoke("Die", 2);
         }
         else if (other.TryGetComponent<Coin>(out var coin))
@@ -120,7 +127,7 @@ public class Chicken : MonoBehaviour
         }
         else if (other.TryGetComponent<Eagle>(out var eagle))
         {
-            if (this.transform != eagle.transform)
+            if (this.transform.parent == null)
             {
                 this.transform.SetParent(eagle.transform);
                 Invoke("Die", 2);

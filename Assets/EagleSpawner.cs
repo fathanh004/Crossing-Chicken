@@ -22,7 +22,7 @@ public class EagleSpawner : MonoBehaviour
         {
             eagle.gameObject.SetActive(true);
             eagle.transform.position = chicken.transform.position + new Vector3(0, 0, 13);
-            chicken.SetUnmoveable(false);
+            chicken.SetUnmoveable(true);
         }
         timer -= Time.deltaTime;
     }

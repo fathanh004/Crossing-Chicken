@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Car : MonoBehaviour
 {
+    [SerializeField] AudioSource audioSource;
     [SerializeField, Range(0, 10)] float speed;
     Vector3 initialPosition;
     float distanceLimit = float.MaxValue;
@@ -14,7 +15,8 @@ public class Car : MonoBehaviour
     }
 
     private void Start()
-    {
+    {   
+        audioSource.Play();
         initialPosition = this.transform.position;
     }
 
