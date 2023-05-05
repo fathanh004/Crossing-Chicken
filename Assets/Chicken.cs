@@ -12,7 +12,7 @@ public class Chicken : MonoBehaviour
     [SerializeField] int rightMoveLimit;
     [SerializeField] int backMoveLimit;
     [SerializeField] Animator animator;
-    private bool isDead = false;
+    private bool isUnmoveable = false;
 
     public UnityEvent<Vector3> OnJumpEnd;
     public UnityEvent<int> OnGetCoin;
@@ -22,7 +22,7 @@ public class Chicken : MonoBehaviour
     // Update is called once per frame  
     void Update()
     {
-        if (isDead)
+        if (isUnmoveable)
         {
             return;
         }
@@ -104,14 +104,14 @@ public class Chicken : MonoBehaviour
     {
         if (other.TryGetComponent<Car>(out var car))
         {
-            if (isDead)
+            if (isUnmoveable)
             {
                 return;
             }
             transform.DOScaleY(0.1f, 0.2f);
-            isDead = true;
+            isUnmoveable = true;
             animator.enabled = false;
-            Invoke("Die", 3);
+            Invoke("Die", 2);
         }
         else if (other.TryGetComponent<Coin>(out var coin))
         {
@@ -123,7 +123,7 @@ public class Chicken : MonoBehaviour
             if (this.transform != eagle.transform)
             {
                 this.transform.SetParent(eagle.transform);
-                Invoke("Die", 3);
+                Invoke("Die", 2);
             }
 
         }
@@ -133,5 +133,10 @@ public class Chicken : MonoBehaviour
     private void Die()
     {
         OnDie.Invoke();
+    }
+
+    public void SetUnmoveable(bool value)
+    {
+        isUnmoveable = value;
     }
 }

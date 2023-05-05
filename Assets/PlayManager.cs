@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayManager : MonoBehaviour
 {
@@ -19,8 +20,8 @@ public class PlayManager : MonoBehaviour
     [SerializeField] private int coin;
 
     public UnityEvent<int> OnScoreUpdate;
-
     public UnityEvent<int, int> OnUpdateTerrainLimit;
+
 
     private void Start()
     {
@@ -44,6 +45,7 @@ public class PlayManager : MonoBehaviour
 
         OnUpdateTerrainLimit.Invoke(horizontalSize, travelDistance + backViewDistance);
     }
+
 
     private Terrain SpawnRandomTerrain(int zPos)
     {
@@ -104,7 +106,8 @@ public class PlayManager : MonoBehaviour
         for (int x = -horizontalSize / 2; x <= horizontalSize / 2; x++)
         {
             var spawnPos = new Vector3(x, 0.1f, zPos);
-            if (Tree.AllPositions.Contains(spawnPos) == false){
+            if (Tree.AllPositions.Contains(spawnPos) == false)
+            {
                 spawnPos.y = 0.5f;
                 spawnPosList.Add(spawnPos);
             }
@@ -115,8 +118,8 @@ public class PlayManager : MonoBehaviour
             var index = Random.Range(0, coinList.Count);
             var spawnPosIndex = Random.Range(0, spawnPosList.Count);
             return Instantiate(
-                coinList[index], 
-                spawnPosList[spawnPosIndex], 
+                coinList[index],
+                spawnPosList[spawnPosIndex],
                 Quaternion.identity);
         }
 
@@ -153,5 +156,10 @@ public class PlayManager : MonoBehaviour
         SpawnRandomTerrain(travelDistance - 1 + forwardViewDistance);
 
         OnUpdateTerrainLimit.Invoke(horizontalSize, travelDistance + backViewDistance);
+    }
+
+    public void Replay()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
