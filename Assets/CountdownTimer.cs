@@ -36,7 +36,7 @@ public class CountdownTimer : MonoBehaviour
                 1).OnComplete(() =>
                 {
                     tmpText.transform.localScale = Vector3.zero;
-                    tmpText.text = "GO!";
+                    tmpText.text = "GO";
 
                 }));
         sequence.Append(tmpText.transform.DOScale(

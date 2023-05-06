@@ -162,4 +162,9 @@ public class PlayManager : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("MainMenuScene");
+    }
 }

@@ -9,6 +9,6 @@ public class GameOverText : MonoBehaviour
 
     public void UpdateText(int score)
     {
-        gameOverText.text = "Game Over!\nScore: " + score; 
+        gameOverText.text = "Game Over\nScore: " + score; 
     }
 }

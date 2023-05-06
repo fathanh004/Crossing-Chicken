@@ -6,6 +6,7 @@ using DG.Tweening;
 
 public class Coin : MonoBehaviour
 {
+    [SerializeField] AudioSource audioSource;
     [SerializeField] float rotateSpeed;
     [SerializeField] int value;
     [SerializeField] GameObject collectEffect;

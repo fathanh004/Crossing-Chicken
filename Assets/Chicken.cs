@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class Chicken : MonoBehaviour
 {
+    [SerializeField] AudioSource bwackAudioSource;
     [SerializeField] AudioSource audioSource;
     [SerializeField] float moveDuration;
     [SerializeField] float jumpPower;
@@ -101,6 +102,11 @@ public class Chicken : MonoBehaviour
         OnJumpEnd.Invoke(transform.position);
     }
 
+    public void PlayBwackSound()
+    {
+        bwackAudioSource.Play();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<Car>(out var car))
@@ -111,7 +117,7 @@ public class Chicken : MonoBehaviour
             }
             transform.DOScaleY(0.1f, 0.2f);
             if (isUnmoveable == false)
-            { 
+            {
                 audioSource.Play();
             }
             isUnmoveable = true;

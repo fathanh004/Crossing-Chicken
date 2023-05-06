@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Grass : Terrain
 {
+    [SerializeField] List<GameObject> treePrefabList;
     [SerializeField] GameObject treePrefab;
     [SerializeField] float treePosY;
     [SerializeField, Range(0, 1)] float treeProbability;
@@ -38,7 +39,7 @@ public class Grass : Terrain
             emptyPositionList.RemoveAt(randomIndex);
 
             //spawn pohon dengan posisi yang terpilih
-            SpawnTree(xPos);
+            SpawnRandomTree(xPos);
         }
 
         SpawnTree(-limit - 1);
@@ -49,7 +50,17 @@ public class Grass : Terrain
     {
         var go = Instantiate(treePrefab,
         new Vector3(xPos, treePosY, this.transform.position.z),
-        Quaternion.identity, 
+        Quaternion.identity,
+        transform);
+    }
+
+    private void SpawnRandomTree(int xPos)
+    {
+        var randomIndex = Random.Range(0, treePrefabList.Count);
+        var randomTreePrefab = treePrefabList[randomIndex];
+        var go = Instantiate(randomTreePrefab,
+        new Vector3(xPos, treePosY, this.transform.position.z),
+        Quaternion.identity,
         transform);
     }
 }
