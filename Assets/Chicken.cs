@@ -92,8 +92,8 @@ public class Chicken : MonoBehaviour
 
     public void UpdateMoveLimit(int horizontalSize, int backLimit)
     {
-        leftMoveLimit = -horizontalSize / 2;
-        rightMoveLimit = horizontalSize / 2;
+        leftMoveLimit = (-horizontalSize / 2);
+        rightMoveLimit = (horizontalSize / 2);
         backMoveLimit = backLimit;
     }
 

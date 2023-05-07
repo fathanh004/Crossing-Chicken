@@ -11,4 +11,5 @@ public class GameOverText : MonoBehaviour
     {
         gameOverText.text = "Game Over\nScore: " + score; 
     }
+    
 }

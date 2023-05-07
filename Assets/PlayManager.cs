@@ -19,6 +19,7 @@ public class PlayManager : MonoBehaviour
     [SerializeField] private int travelDistance;
     [SerializeField] private int coin;
 
+
     public UnityEvent<int> OnScoreUpdate;
     public UnityEvent<int, int> OnUpdateTerrainLimit;
 
@@ -46,7 +47,6 @@ public class PlayManager : MonoBehaviour
         OnUpdateTerrainLimit.Invoke(horizontalSize, travelDistance + backViewDistance);
     }
 
-
     private Terrain SpawnRandomTerrain(int zPos)
     {
         Terrain terrainCheck = null;
@@ -63,10 +63,6 @@ public class PlayManager : MonoBehaviour
             else if (terrainCheck.GetType() != activeTerrainDict[checkPos].GetType())
             {
                 randomIndex = Random.Range(0, terrainList.Count);
-                if(terrainList[randomIndex].GetType() == terrainCheck.GetType())
-                {
-                    continue;
-                }
                 return SpawnTerrain(terrainList[randomIndex], zPos);
             }
             else
@@ -88,6 +84,7 @@ public class PlayManager : MonoBehaviour
         randomIndex = Random.Range(0, candidateTerrain.Count);
         return SpawnTerrain(candidateTerrain[randomIndex], zPos);
     }
+
 
     public Terrain SpawnTerrain(Terrain terrain, int zPos)
     {
