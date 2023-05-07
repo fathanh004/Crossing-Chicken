@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Car : MonoBehaviour
+public class Train : MonoBehaviour
 {
     [SerializeField] AudioSource audioSource;
-    [SerializeField, Range(0, 10)] float speed;
+    [SerializeField, Range(0, 100)] float speed;
     Vector3 initialPosition;
     float distanceLimit = float.MaxValue;
 
@@ -14,13 +14,8 @@ public class Car : MonoBehaviour
         this.distanceLimit = distance;
     }
 
-    public void SetUpSpeed(float speed)
-    {
-        this.speed = speed;
-    }
-
     private void Start()
-    {   
+    {
         audioSource.Play();
         initialPosition = this.transform.position;
     }
@@ -33,6 +28,4 @@ public class Car : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-
 }

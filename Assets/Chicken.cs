@@ -122,8 +122,6 @@ public class Chicken : MonoBehaviour
             }
             isUnmoveable = true;
             animator.enabled = false;
-
-
             Invoke("Die", 2);
         }
         else if (other.TryGetComponent<Coin>(out var coin))
@@ -139,6 +137,21 @@ public class Chicken : MonoBehaviour
                 Invoke("Die", 2);
             }
 
+        }
+        else if (other.TryGetComponent<Train>(out var train))
+        {
+            if (isUnmoveable)
+            {
+                return;
+            }
+            transform.DOScaleY(0.1f, 0.2f);
+            if (isUnmoveable == false)
+            {
+                audioSource.Play();
+            }
+            isUnmoveable = true;
+            animator.enabled = false;
+            Invoke("Die", 2);
         }
 
     }

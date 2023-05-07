@@ -63,6 +63,10 @@ public class PlayManager : MonoBehaviour
             else if (terrainCheck.GetType() != activeTerrainDict[checkPos].GetType())
             {
                 randomIndex = Random.Range(0, terrainList.Count);
+                if(terrainList[randomIndex].GetType() == terrainCheck.GetType())
+                {
+                    continue;
+                }
                 return SpawnTerrain(terrainList[randomIndex], zPos);
             }
             else

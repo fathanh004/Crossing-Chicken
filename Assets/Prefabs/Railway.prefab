@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7416891743517091876
+--- !u!1 &6598260046753952071
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7416891743517091877}
-  - component: {fileID: 7416891743517091878}
+  - component: {fileID: 6598260046753952069}
+  - component: {fileID: 6598260046753952070}
   m_Layer: 0
-  m_Name: Road
+  m_Name: Railway
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7416891743517091877
+--- !u!4 &6598260046753952069
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7416891743517091876}
+  m_GameObject: {fileID: 6598260046753952071}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,22 +32,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7416891743517091878
+--- !u!114 &6598260046753952070
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7416891743517091876}
+  m_GameObject: {fileID: 6598260046753952071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd7114cb72da57b458e7221371f6ae3c, type: 3}
+  m_Script: {fileID: 11500000, guid: a81fa55db1268af48b68a1ddeb944192, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 5165974369138279358, guid: 632f10c18f1a95940b866e9c6b42101a, type: 3}
-  carPrefabList:
-  - {fileID: 571524223370827296, guid: 335e3bc205a2e5d40941000fc3713b27, type: 3}
-  - {fileID: 3029080659527903750, guid: 9eb053977a6308a468515ed62e76af3d, type: 3}
-  minCarInterval: 2
-  maxCarInterval: 7
-  carPosY: 0.1
+  tilePrefab: {fileID: 2877280084300941298, guid: 431f23eb20e17774a9119348b4681d21, type: 3}
+  trainPrefab: {fileID: 858011718386102292, guid: 19222d9a8de1bfc44ac687a75f201890, type: 3}
+  minTrainInterval: 4
+  maxTrainInterval: 10
+  trainPosY: 0.1
