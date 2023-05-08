@@ -23,12 +23,9 @@ public class PlayManager : MonoBehaviour
     public UnityEvent<int> OnScoreUpdate;
     public UnityEvent<int, int> OnUpdateTerrainLimit;
 
-
     private void Start()
     {
-        if(AudioListener.volume == 0){
-            AudioListener.volume = 1;
-        }
+        AudioListener.volume = 1;
         //membuat initial grass
         for (int zPos = backViewDistance; zPos < initialGrassCount; zPos++)
         {

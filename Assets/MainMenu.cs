@@ -5,7 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-   
+    private void Start()
+    {
+        //Set screen size for Standalone
+
+        Screen.SetResolution(564, 960, false);
+
+    }
     public void Play()
     {
         SceneManager.LoadScene("PlayScene");
