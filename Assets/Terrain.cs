@@ -5,16 +5,18 @@ using UnityEngine;
 public class Terrain : MonoBehaviour
 {
     [SerializeField] GameObject tilePrefab;
+    int movableLimit;
+    protected int outsideSize = 10;
 
     protected int horizontalSize;
 
     public virtual void Generate(int size)
     {
-        horizontalSize = size;
         if (size == 0)
         {
             return;
         }
+        horizontalSize = size;
 
         if ((float)size % 2 == 0)
         {
@@ -27,11 +29,17 @@ public class Terrain : MonoBehaviour
         {
             SpawnTile(i);
         }
+        
+        //spawn darken tile outside of the movable tile
+        for (int i = -limit-outsideSize; i < -limit; i++)
+        {
+            SpawnDarkenTile(i);
+        }
 
-        var leftBoundaryTile = SpawnTile(-limit - 1);
-        var rightBoundaryTile = SpawnTile(limit + 1);
-        DarkenObject(leftBoundaryTile);
-        DarkenObject(rightBoundaryTile);
+        for (int i = limit+1; i < limit+outsideSize; i++)
+        {
+            SpawnDarkenTile(i);
+        }
     }
 
     private GameObject SpawnTile(int xPos)
@@ -48,5 +56,11 @@ public class Terrain : MonoBehaviour
         {
             rend.material.color *= Color.grey;
         }
+    }
+
+    private void SpawnDarkenTile(int xPos)
+    {
+        var go = SpawnTile(xPos);
+        DarkenObject(go);
     }
 }

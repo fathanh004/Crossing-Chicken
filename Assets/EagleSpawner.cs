@@ -20,11 +20,16 @@ public class EagleSpawner : MonoBehaviour
     {
         if (timer <= 0 && eagle.gameObject.activeInHierarchy == false)
         {
-            eagle.gameObject.SetActive(true);
-            eagle.transform.position = chicken.transform.position + new Vector3(0, 0, 13);
-            chicken.SetUnmoveable(true);
+            SpawnEagle();
         }
         timer -= Time.deltaTime;
+    }
+
+    public void SpawnEagle()
+    {
+        eagle.gameObject.SetActive(true);
+        eagle.transform.position = chicken.transform.position + new Vector3(0, 0, 13);
+        chicken.SetUnmoveable(true);
     }
 
     public void ResetTimer()

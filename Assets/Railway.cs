@@ -15,12 +15,12 @@ public class Railway : Terrain
     {
         if (Random.value > 0.5f)
         {
-            trainSpawnPosition = new Vector3(horizontalSize / 2 + 3, trainPosY, this.transform.position.z);
+            trainSpawnPosition = new Vector3((horizontalSize / 2 + 3) + outsideSize, trainPosY, this.transform.position.z);
             trainRotation = Quaternion.Euler(0, -90, 0);
         }
         else
         {
-            trainSpawnPosition = new Vector3(-(horizontalSize / 2 + 3), trainPosY, this.transform.position.z);
+            trainSpawnPosition = new Vector3(-(horizontalSize / 2 + 3) - outsideSize, trainPosY, this.transform.position.z);
             trainRotation = Quaternion.Euler(0, 90, 0);
         }
 
@@ -43,7 +43,7 @@ public class Railway : Terrain
     private void SpawnCar()
     {
         var train = Instantiate(trainPrefab, trainSpawnPosition, trainRotation);
-        train.SetUpDistanceLimit(horizontalSize + 6);
+        train.SetUpDistanceLimit(horizontalSize + outsideSize + 10);
     }
 
 }

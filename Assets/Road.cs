@@ -18,12 +18,12 @@ public class Road : Terrain
     {
         if (Random.value > 0.5f)
         {
-            carSpawnPosition = new Vector3(horizontalSize / 2 + 3, carPosY, this.transform.position.z);
+            carSpawnPosition = new Vector3((horizontalSize / 2 + 3) + outsideSize, carPosY, this.transform.position.z);
             carRotation = Quaternion.Euler(0, -90, 0);
         }
         else
         {
-            carSpawnPosition = new Vector3(-(horizontalSize / 2 + 3), carPosY, this.transform.position.z);
+            carSpawnPosition = new Vector3(-(horizontalSize / 2 + 3) - outsideSize, carPosY, this.transform.position.z);
             carRotation = Quaternion.Euler(0, 90, 0);
         }
         fixedSpeed = Random.Range(2, 7);
@@ -47,13 +47,14 @@ public class Road : Terrain
         if (speed > 4)
         {
             carPrefab = carPrefabList[0];
-        } else
+        }
+        else
         {
             carPrefab = carPrefabList[1];
         }
 
         var car = Instantiate(carPrefab, carSpawnPosition, carRotation);
-        car.SetUpDistanceLimit(horizontalSize + 6);
+        car.SetUpDistanceLimit(horizontalSize + outsideSize + 10);
 
         car.SetUpSpeed(speed);
     }

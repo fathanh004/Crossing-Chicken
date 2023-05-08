@@ -26,6 +26,9 @@ public class PlayManager : MonoBehaviour
 
     private void Start()
     {
+        if(AudioListener.volume == 0){
+            AudioListener.volume = 1;
+        }
         //membuat initial grass
         for (int zPos = backViewDistance; zPos < initialGrassCount; zPos++)
         {

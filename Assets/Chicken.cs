@@ -19,9 +19,15 @@ public class Chicken : MonoBehaviour
     public UnityEvent<Vector3> OnJumpEnd;
     public UnityEvent<int> OnGetCoin;
     public UnityEvent OnDie;
+    public UnityEvent OnMovingToBackLimit;
 
     float timer;
     // Update is called once per frame  
+
+    private void Start() {
+        AudioListener.volume = 1;
+    }
+    
     void Update()
     {
         if (isUnmoveable)
@@ -75,10 +81,14 @@ public class Chicken : MonoBehaviour
 
         if (targetPosition.x < leftMoveLimit ||
             targetPosition.x > rightMoveLimit ||
-            targetPosition.z < backMoveLimit ||
             Tree.AllPositions.Contains(targetPosition))
         {
             targetPosition = transform.position;
+        }
+
+        if (targetPosition.z == backMoveLimit)
+        {
+            OnMovingToBackLimit.Invoke();
         }
 
         transform.
@@ -92,8 +102,10 @@ public class Chicken : MonoBehaviour
 
     public void UpdateMoveLimit(int horizontalSize, int backLimit)
     {
+        //horizontalSize = Mathf.FloorToInt(horizontalSize * 2/5);
         leftMoveLimit = (-horizontalSize / 2);
         rightMoveLimit = (horizontalSize / 2);
+        backLimit += 5;
         backMoveLimit = backLimit;
     }
 
@@ -158,6 +170,7 @@ public class Chicken : MonoBehaviour
 
     private void Die()
     {
+        AudioListener.volume = 0;
         OnDie.Invoke();
     }
 
