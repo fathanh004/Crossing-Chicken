@@ -204,16 +204,17 @@ public class Chicken : MonoBehaviour
 
     void HandleSwipe()
     {
+        Vector3 direction = Vector3.zero;
         Vector2 swipeDirection = endTouchPosition - startTouchPosition;
 
         if (swipeDirection.magnitude < 20)
         {
-            return; // Ignore small swipes
+            direction += Vector3.forward;
         }
 
         swipeDirection.Normalize();
 
-        Vector3 direction = Vector3.zero;
+        
 
         if (swipeDirection.y > 0.5f)
         {
