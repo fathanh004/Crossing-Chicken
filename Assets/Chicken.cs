@@ -209,7 +209,7 @@ public class Chicken : MonoBehaviour
 
         if (swipeDirection.magnitude < 20)
         {
-            direction += Vector3.forward;
+            return;
         }
 
         swipeDirection.Normalize();

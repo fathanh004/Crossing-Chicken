@@ -24,6 +24,7 @@ public class PausePanel : MonoBehaviour
     public void BackToMenu()
     {
         Time.timeScale = 1;
+        AudioListener.pause = false;
         SceneManager.LoadScene("MainMenuScene");
     }
 
